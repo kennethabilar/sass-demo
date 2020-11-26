@@ -1,0 +1,146 @@
+$colors: (
+    primary: #005dff,
+    primary-light: lighten(#005dff, 40%),
+    primary-dark: darken(#005dff, 40%),
+    accent: #fff5bb
+);
+
+$border: 15px;
+$padding: 15px;
+$desktop: 840px;
+
+@function color($color-name) {
+    @return map-get($colors, $color-name);
+}
+
+@mixin desktop {
+    @media (min-width: #{$desktop}) {
+        @content;
+    }
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+
+    #bg {
+        background-color: color(primary);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: -1;
+        clip-path: polygon(100% 0, 100% 80%, 65% 100%, 0 100%, 0 0);
+
+        @include desktop {
+            clip-path: polygon(0 0, 80% 0, 55% 100%, 0 100%);
+        }
+    }
+
+    header a {
+        color: #fff;
+        padding: $padding;
+        display: block;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+}
+
+main {
+    @include desktop {
+        display: grid;
+        grid-template-columns: 50% auto;
+        grid-template-areas: 
+            "primary card";
+    }
+
+    #card {
+        background-color: #fff;
+        border-radius: $border;
+        width: 80%;
+        margin: 1em auto;
+        padding: $padding;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+        @include desktop {
+            height: fit-content;
+            margin: 1em;
+            grid-area: card;
+            align-self: center;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                margin-bottom: 10px;
+
+                span {
+                    background-color: color(primary-light);
+                    border-radius: 50%;
+                    width: 30px;
+                    height: 30px;
+                    margin-right: 10px;
+                    position: absolute;
+                }
+
+                strong {
+                    margin-top: 10px;
+                    margin-left: max(40px);
+                    display: inline-block;
+                }
+            }
+        }
+    }
+
+    #primary {
+        color: #fff;
+        padding: $padding;
+        text-align: center;
+
+        @include desktop {
+            grid-area: primary;
+            margin: 4em 0 0 4em;
+            text-align: left;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-top: 10px;
+            text-transform: uppercase;
+
+            @include desktop {
+                font-size: 4em;
+                line-height: 0.9em;
+                width: 30%;
+            }
+        }
+
+        p {
+            font-size: 1.4em;
+        }
+
+        a {
+            font-weight: 600;
+            color: color(primary-dark);
+            background-color: color(accent);
+            border-radius: $border;
+            margin: 50px auto 0 auto;
+            padding: $padding;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+
+            @include desktop {
+                padding: $padding $padding * 4;
+                display: inline-block;
+            }
+        }
+    }
+}
